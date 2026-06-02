@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import io from "socket.io-client";
 
-import "../styles/chat.css";
+
 
 let socket;
 
