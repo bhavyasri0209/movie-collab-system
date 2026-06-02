@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Realtime Chat</title>
+
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<style>
+    .navbar {
+
+    background: black;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: white;
+}
+
+.navbar a {
+
+    color: white;
+
+    margin-right: 20px;
+
+    text-decoration: none;
+}
+
+.navbar button {
+
+    background: red;
+
+    border: none;
+
+    padding: 10px 20px;
+
+    color: white;
+
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+<nav class="navbar">
+
+    <h2>🎬 MovieCollab</h2>
+
+    <div>
+
+        <a href="/">Home</a>
+
+        <a href="/director-dashboard-page">
+            Dashboard
+        </a>
+
+        <a href="/kanban">
+            Tasks
+        </a>
+
+        <a href="/chat">
+            Chat
+        </a>
+
+        <a href="/analytics">
+            Analytics
+        </a>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+    <h2>Production Chat</h2>
+
+    <input id="message" placeholder="Type Message">
+
+    <button onclick="sendMessage()">
+        Send
+    </button>
+
+    <button onclick="sendNotification()">
+        Send Notification
+    </button>
+
+    <h3>Online Crew</h3>
+
+    <ul id="onlineUsers"></ul>
+
+    <h3>Messages</h3>
+
+    <ul id="messages"></ul>
+
+    <script>
+
+        // SOCKET CONNECTION
+        const socket = io("http://127.0.0.1:5000");
+
+        // JOIN USER
+        socket.emit('join_user', {
+
+            user: "Director"
+        });
+
+        // CONNECTION SUCCESS
+        socket.on('connect', () => {
+
+            console.log("Connected to server");
+        });
+
+        // SEND CHAT MESSAGE
+        function sendMessage() {
+
+            const msg = document.getElementById("message").value;
+
+            socket.emit('send_message', {
+
+                user: "Director",
+
+                message: msg
+            });
+
+            // CLEAR INPUT
+            document.getElementById("message").value = "";
+        }
+
+        // RECEIVE CHAT MESSAGE
+        socket.on('receive_message', function(data) {
+
+            const li = document.createElement('li');
+
+            li.innerText = data.user + ": " + data.message;
+
+            document.getElementById("messages").appendChild(li);
+        });
+
+        // SEND NOTIFICATION
+        function sendNotification() {
+
+            socket.emit('send_notification', {
+
+                title: "Shoot Update",
+
+                message: "Crew meeting starts in 10 minutes"
+            });
+        }
+
+        // RECEIVE NOTIFICATION
+        socket.on('receive_notification', function(data) {
+
+            alert(
+                data.title + " : " + data.message
+            );
+        });
+
+        // RECEIVE ONLINE USERS
+        socket.on('online_users', function(users) {
+
+            const onlineList =
+                document.getElementById("onlineUsers");
+
+            onlineList.innerHTML = "";
+
+            users.forEach(function(user) {
+
+                const li = document.createElement('li');
+
+                li.innerText = user + " 🟢";
+
+                onlineList.appendChild(li);
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

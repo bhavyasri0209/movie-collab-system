@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Director Dashboard</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial;
+
+            background: #f4f4f4;
+
+            padding: 30px;
+        }
+
+        h1 {
+
+            text-align: center;
+        }
+
+        .dashboard {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-top: 40px;
+        }
+
+        .card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 10px;
+
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+
+            text-align: center;
+        }
+
+        .card h2 {
+
+            font-size: 40px;
+
+            margin: 0;
+        }
+
+        .card p {
+
+            color: gray;
+        }
+        .navbar {
+
+    background: black;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: white;
+}
+
+.navbar a {
+
+    color: white;
+
+    margin-right: 20px;
+
+    text-decoration: none;
+}
+
+.navbar button {
+
+    background: red;
+
+    border: none;
+
+    padding: 10px 20px;
+
+    color: white;
+
+    cursor: pointer;
+}
+    </style>
+
+</head>
+
+<body>
+<nav class="navbar">
+
+    <h2>🎬 MovieCollab</h2>
+
+    <div>
+
+        <a href="/">Home</a>
+
+        <a href="/director-dashboard-page">
+            Dashboard
+        </a>
+
+        <a href="/kanban">
+            Tasks
+        </a>
+
+        <a href="/chat">
+            Chat
+        </a>
+
+        <a href="/analytics">
+            Analytics
+        </a>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+    <h1>🎬 Director Dashboard</h1>
+
+    <div class="dashboard">
+
+        <div class="card">
+
+            <h2 id="projects">0</h2>
+
+            <p>Total Projects</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2 id="crew">0</h2>
+
+            <p>Total Crew</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2 id="tasks">0</h2>
+
+            <p>Total Tasks</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2 id="completed">0</h2>
+
+            <p>Completed Tasks</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2 id="schedules">0</h2>
+
+            <p>Total Schedules</p>
+
+        </div>
+
+        <div class="card">
+
+            <h2 id="assets">0</h2>
+
+            <p>Total Assets</p>
+
+        </div>
+
+    </div>
+
+   <script>
+
+    // BASE URL
+
+    const BASE_URL =
+        window.location.origin;
+
+    // LOAD DASHBOARD
+
+    async function loadDashboard() {
+
+        const token =
+            localStorage.getItem("token");
+
+        // CHECK LOGIN
+
+        if (!token) {
+
+            alert("Please Login First");
+
+            window.location.href =
+                "/login-page";
+
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+
+                `${BASE_URL}/director-dashboard`,
+
+                {
+
+                    method: "GET",
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+            // CHECK ERROR
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Dashboard API Failed"
+                );
+            }
+
+            const data =
+                await response.json();
+
+            // UPDATE UI
+
+            document.getElementById(
+                "projects"
+            ).innerText =
+                data.total_projects;
+
+            document.getElementById(
+                "crew"
+            ).innerText =
+                data.total_crew_members;
+
+            document.getElementById(
+                "tasks"
+            ).innerText =
+                data.total_tasks;
+
+            document.getElementById(
+                "completed"
+            ).innerText =
+                data.completed_tasks;
+
+            document.getElementById(
+                "schedules"
+            ).innerText =
+                data.total_schedules;
+
+            document.getElementById(
+                "assets"
+            ).innerText =
+                data.total_assets;
+        }
+
+        catch(error) {
+
+            console.log(error);
+
+            alert(
+                "Failed To Load Dashboard"
+            );
+        }
+    }
+
+    // LOGOUT
+
+    function logout() {
+
+        localStorage.removeItem(
+            "token"
+        );
+
+        localStorage.removeItem(
+            "user_id"
+        );
+
+        window.location.href =
+            "/login-page";
+    }
+
+    // INITIAL LOAD
+
+    loadDashboard();
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Production Analytics</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body {
+
+            font-family: Arial;
+
+            background: #f4f4f4;
+
+            padding: 30px;
+        }
+
+        h1 {
+
+            text-align: center;
+        }
+
+        .chart-container {
+
+            width: 700px;
+
+            margin: auto;
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 10px;
+
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+
+            margin-top: 40px;
+        }
+        .navbar {
+
+    background: black;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: white;
+}
+
+.navbar a {
+
+    color: white;
+
+    margin-right: 20px;
+
+    text-decoration: none;
+}
+
+.navbar button {
+
+    background: red;
+
+    border: none;
+
+    padding: 10px 20px;
+
+    color: white;
+
+    cursor: pointer;
+}
+    </style>
+
+</head>
+
+<body>
+<nav class="navbar">
+
+    <h2>🎬 MovieCollab</h2>
+
+    <div>
+
+        <a href="/">Home</a>
+
+        <a href="/director-dashboard-page">
+            Dashboard
+        </a>
+
+        <a href="/kanban">
+            Tasks
+        </a>
+
+        <a href="/chat">
+            Chat
+        </a>
+
+        <a href="/analytics">
+            Analytics
+        </a>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+    <h1>📈 Production Analytics Dashboard</h1>
+
+    <div class="chart-container">
+
+        <canvas id="taskChart"></canvas>
+
+    </div>
+
+    <div class="chart-container">
+
+        <canvas id="sceneChart"></canvas>
+
+    </div>
+
+    <script>
+
+        async function loadAnalytics() {
+
+            const token =
+                localStorage.getItem("token");
+
+            // TASK DASHBOARD
+            const taskResponse = await fetch(
+
+                "http://127.0.0.1:5000/director-dashboard",
+
+                {
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+            const taskData =
+                await taskResponse.json();
+
+            // SCENE DATA
+            const sceneResponse = await fetch(
+
+                "http://127.0.0.1:5000/scenes/1",
+
+                {
+
+                    headers: {
+
+                        "Authorization":
+                            "Bearer " + token
+                    }
+                }
+            );
+
+            const scenes =
+                await sceneResponse.json();
+
+            let completedScenes = 0;
+
+            let pendingScenes = 0;
+
+            scenes.forEach(scene => {
+
+                if (scene.status === "Completed") {
+
+                    completedScenes++;
+                }
+
+                else {
+
+                    pendingScenes++;
+                }
+            });
+
+            // TASK CHART
+            new Chart(
+
+                document.getElementById("taskChart"),
+
+                {
+
+                    type: "bar",
+
+                    data: {
+
+                        labels: [
+
+                            "Total Tasks",
+
+                            "Completed Tasks"
+                        ],
+
+                        datasets: [{
+
+                            label: "Tasks",
+
+                            data: [
+
+                                taskData.total_tasks,
+
+                                taskData.completed_tasks
+                            ]
+                        }]
+                    }
+                }
+            );
+
+            // SCENE CHART
+            new Chart(
+
+                document.getElementById("sceneChart"),
+
+                {
+
+                    type: "pie",
+
+                    data: {
+
+                        labels: [
+
+                            "Completed Scenes",
+
+                            "Pending Scenes"
+                        ],
+
+                        datasets: [{
+
+                            data: [
+
+                                completedScenes,
+
+                                pendingScenes
+                            ]
+                        }]
+                    }
+                }
+            );
+        }
+
+        loadAnalytics();
+
+    </script>
+
+</body>
+
+</html>

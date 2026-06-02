@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Movie Production Platform</title>
+
+    <style>
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial;
+
+            background: #111;
+
+            color: white;
+        }
+
+        nav {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 20px 50px;
+
+            background: #000;
+        }
+
+        nav a {
+
+            color: white;
+
+            text-decoration: none;
+
+            margin-left: 20px;
+        }
+
+        .hero {
+
+            text-align: center;
+
+            padding: 120px 20px;
+        }
+
+        .hero h1 {
+
+            font-size: 60px;
+        }
+
+        .hero p {
+
+            font-size: 22px;
+
+            color: #ccc;
+        }
+
+        .btn {
+
+            padding: 15px 30px;
+
+            background: #ff3c00;
+
+            border: none;
+
+            color: white;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            border-radius: 8px;
+
+            margin-top: 20px;
+        }
+
+        .features {
+
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+            padding: 50px;
+        }
+
+        .card {
+
+    background: #1f1f1f;
+
+    padding: 30px;
+
+    border-radius: 10px;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+        .card h2 {
+
+            margin-bottom: 10px;
+        }
+        .navbar {
+
+    background: black;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    color: white;
+}
+
+.navbar a {
+
+    color: white;
+
+    margin-right: 20px;
+
+    text-decoration: none;
+}
+
+.navbar button {
+
+    background: red;
+
+    border: none;
+
+    padding: 10px 20px;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+    </style>
+
+</head>
+
+<body>
+<nav class="navbar">
+
+    <h2>🎬 MovieCollab</h2>
+
+    <div>
+
+        <a href="/">Home</a>
+
+        <a href="/director-dashboard-page">
+            Dashboard
+        </a>
+
+        <a href="/kanban">
+            Tasks
+        </a>
+
+        <a href="/chat">
+            Chat
+        </a>
+
+        <a href="/analytics">
+            Analytics
+        </a>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+    <nav>
+
+        <h2>🎬 MovieCollab</h2>
+
+        <div>
+
+            <a href="/register-page">Register</a>
+
+            <a href="/chat">Chat</a>
+
+            <a href="/analytics">Analytics</a>
+
+            <a href="/ai-assistant">AI Assistant</a>
+
+        </div>
+
+    </nav>
+
+    <section class="hero">
+
+        <h1>
+            Movie Production Collaboration Platform
+        </h1>
+
+        <p>
+            Manage projects, crew, tasks, schedules,
+            analytics and realtime collaboration.
+        </p>
+
+        <button
+            class="btn"
+            onclick="window.location.href='/register-page'"
+        >
+            Get Started
+        </button>
+
+    </section>
+
+    <section class="features">
+
+    <div class="card"
+        onclick="window.location.href='/chat'">
+
+        <h2>💬 Realtime Chat</h2>
+
+        <p>
+            Communicate instantly with crew members.
+        </p>
+
+    </div>
+
+    <div class="card"
+        onclick="window.location.href='/calendar'">
+
+        <h2>📅 Scheduling</h2>
+
+        <p>
+            Organize shoot schedules professionally.
+        </p>
+
+    </div>
+
+    <div class="card"
+        onclick="window.location.href='/analytics'">
+
+        <h2>📈 Analytics</h2>
+
+        <p>
+            Visualize production progress with charts.
+        </p>
+
+    </div>
+
+    <div class="card"
+        onclick="window.location.href='/scene-management'">
+
+        <h2>🎬 Scene Tracking</h2>
+
+        <p>
+            Track movie scene completion workflow.
+        </p>
+
+    </div>
+
+    <div class="card"
+        onclick="window.location.href='/ai-assistant'">
+
+        <h2>🤖 AI Assistant</h2>
+
+        <p>
+            Smart production guidance and suggestions.
+        </p>
+
+    </div>
+
+    <div class="card"
+        onclick="window.location.href='/budget-dashboard'">
+
+        <h2>💰 Budget Management</h2>
+
+        <p>
+            Track expenses and production budgets.
+        </p>
+
+    </div>
+
+</section>
+
+</body>
+
+</html>
