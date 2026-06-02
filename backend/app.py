@@ -9,38 +9,35 @@ from models import db
 import extensions
 from routes.auth import auth
 from routes.project import project
-<<<<<<< HEAD
+
 from routes.dashboard import dashboard
 from socket_events import register_socket_events
 
 # Create Flask app FIRST
-=======
+
 
 import extensions
 
 from socket_events import register_socket_events
 
 
->>>>>>> a24bb6e2c976f99e72794ff85acba2ebbbc14be8
 app = Flask(__name__)
 
 # Then configure it
 CORS(app)
 app.config.from_object(Config)
 
-<<<<<<< HEAD
+
 # Initialize extensions
-=======
+
 # ======================================================
 # DATABASE
 # ======================================================
 
 # SQLAlchemy
->>>>>>> a24bb6e2c976f99e72794ff85acba2ebbbc14be8
 db.init_app(app)
 jwt = JWTManager(app)
 
-<<<<<<< HEAD
 socketio = SocketIO(app, cors_allowed_origins="*")
 register_socket_events(socketio)
 
@@ -49,9 +46,6 @@ mongo_client = MongoClient(app.config['MONGO_URI'])
 extensions.mongo_db = mongo_client['movie_production_db']
 print("MongoDB Connected Successfully 🚀")
 
-# REGISTER BLUEPRINTS
-=======
-# SocketIO
 socketio = SocketIO(
     app,
     cors_allowed_origins="*"
@@ -82,17 +76,14 @@ with app.app_context():
 # REGISTER BLUEPRINTS
 # ======================================================
 
->>>>>>> a24bb6e2c976f99e72794ff85acba2ebbbc14be8
 app.register_blueprint(auth)
 
 app.register_blueprint(project)
 app.register_blueprint(dashboard)
 
-<<<<<<< HEAD
 # START SERVER
 if __name__ == "__main__":
     socketio.run(app, host='127.0.0.1', port=5000, debug=True)
-=======
 # ======================================================
 # FRONTEND ROUTES
 # ======================================================
@@ -203,4 +194,3 @@ if __name__ == "__main__":
         app,
         debug=True
     )
->>>>>>> a24bb6e2c976f99e72794ff85acba2ebbbc14be8
