@@ -1,0 +1,91 @@
+body{
+  background:#050816;
+}
+
+.hero{
+  min-height:100vh;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:
+  linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.8)),
+  url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1974');
+  background-size:cover;
+  overflow:hidden;
+}
+
+.hero-content{
+  width:70%;
+  position:relative;
+  z-index:2;
+}
+
+.badge{
+  background:rgba(255,255,255,.1);
+  padding:12px 20px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:50px;
+  backdrop-filter:blur(20px);
+}
+
+.hero h1{
+  font-size:5rem;
+  margin-top:30px;
+  line-height:1.1;
+}
+
+.hero p{
+  margin-top:25px;
+  width:70%;
+  color:#c5c5c5;
+  font-size:1.1rem;
+  line-height:1.8;
+}
+
+.buttons{
+  margin-top:40px;
+  display:flex;
+  gap:20px;
+}
+
+button{
+  padding:16px 28px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  font-size:1rem;
+  transition:.4s;
+}
+
+button:hover{
+  transform:translateY(-4px) scale(1.03);
+}
+
+.secondary{
+  background:transparent;
+  border:1px solid white;
+  color:white;
+}
+
+.glow{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(120px);
+}
+
+.glow1{
+  width:300px;
+  height:300px;
+  background:#ff0055;
+  top:10%;
+  right:10%;
+}
+
+.glow2{
+  width:350px;
+  height:350px;
+  background:#0066ff;
+  bottom:0;
+  left:0;
+}

@@ -1,0 +1,45 @@
+.scene-board{
+  padding:40px;
+  color:white;
+}
+
+.scene-board h1{
+  margin-bottom:35px;
+  font-size:3rem;
+}
+
+.board-columns{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:25px;
+}
+
+.board-column{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:28px;
+  padding:20px;
+  min-height:600px;
+}
+
+.board-column h2{
+  margin-bottom:25px;
+}
+
+.droppable-col{
+  min-height:500px;
+}
+
+.scene-card{
+  background:rgba(255,255,255,.06);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
+  cursor:grab;
+  transition:.3s;
+}
+
+.scene-card:hover{
+  transform:scale(1.03);
+  background:#ff004c;
+}

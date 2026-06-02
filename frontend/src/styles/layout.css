@@ -1,0 +1,22 @@
+.main-layout-content{
+  flex:1;
+  overflow-y:auto;
+}
+.page-container{
+  padding:40px;
+  color:white;
+}
+
+.page-container h1{
+  margin-bottom:30px;
+  font-size:3rem;
+}
+
+.page-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:28px;
+  padding:40px;
+  font-size:1.1rem;
+  line-height:1.8;
+}
