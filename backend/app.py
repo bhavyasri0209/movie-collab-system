@@ -154,7 +154,17 @@ def budget_dashboard():
     return render_template(
         "budget_dashboard.html"
     )
+@app.route("/messages")
+def get_messages():
 
+    messages = list(
+        extensions.mongo_db.chat_messages.find(
+            {},
+            {"_id": 0}
+        ).sort("timestamp", 1)
+    )
+
+    return jsonify(messages)
 
 if __name__ == "__main__":
 

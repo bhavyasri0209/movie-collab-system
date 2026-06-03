@@ -18,6 +18,11 @@ export default function Chat() {
   const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
 
   useEffect(() => {
+     fetch("https://movie-collab-system.onrender.com/messages")
+    .then((res) => res.json())
+    .then((data) => {
+      setMessages(data);
+    });
     // Connect to socket
     socket = io("https://movie-collab-system.onrender.com", {
       reconnection: true,

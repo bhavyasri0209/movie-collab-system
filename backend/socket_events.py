@@ -1,76 +1,44 @@
 from flask_socketio import emit
-
+from datetime import datetime
 import extensions
-
-# STORE ONLINE USERS
-online_users = []
 
 def register_socket_events(socketio):
 
-    # USER CONNECT
-    @socketio.on('connect')
+    @socketio.on("connect")
     def handle_connect():
+        print("User connected")
 
-        print("User Connected")
+    @socketio.on("disconnect")
+    def handle_disconnect():
+        print("User disconnected")
 
-    # USER JOIN
-    @socketio.on('join_user')
-    def join_user(data):
-
-        username = data['user']
-
-        if username not in online_users:
-
-            online_users.append(username)
+    @socketio.on("join_user")
+    def handle_join(data):
 
         emit(
-            'online_users',
-            online_users,
+            "receive_message",
+            {
+                "user": "System",
+                "message": f"{data['user']} joined the chat"
+            },
             broadcast=True
         )
 
-    # CHAT MESSAGE
-    @socketio.on('send_message')
+    @socketio.on("send_message")
     def handle_message(data):
 
-        message = {
-
-            "user": data['user'],
-
-            "message": data['message']
+        message_data = {
+            "user": data["user"],
+            "message": data["message"],
+            "timestamp": datetime.utcnow()
         }
 
-        result = extensions.mongo_db.messages.insert_one(
-            message
+        extensions.mongo_db.chat_messages.insert_one(
+            message_data
         )
-
-        message['_id'] = str(result.inserted_id)
 
         emit(
-            'receive_message',
-            message,
-            broadcast=True
-        )
-
-    # NOTIFICATION
-    @socketio.on('send_notification')
-    def send_notification(data):
-
-        notification = {
-
-            "title": data['title'],
-
-            "message": data['message']
-        }
-
-        result = extensions.mongo_db.notifications.insert_one(
-            notification
-        )
-
-        notification['_id'] = str(result.inserted_id)
-
-        emit(
-            'receive_notification',
-            notification,
+            "receive_message",
+            message_data,
             broadcast=True
         )

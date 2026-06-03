@@ -26,19 +26,21 @@ export default function Login() {
 
   };
 
-  const handleLogin = async () => {
+ const handleLogin = async () => {
 
-    try {
+  const response = await API.post("/login", {
+    email,
+    password
+  });
 
-      const response = await loginUser(formData);
+  localStorage.setItem(
+    "user",
+    JSON.stringify({
+      name: response.data.username
+    })
+  );
 
-      if(response.data.token){
-
-        localStorage.setItem("token", response.data.token);
-        
-        localStorage.setItem("user", JSON.stringify({
-          role: response.data.role
-        }));
+};
 
         setError("");
         navigate("/dashboard");
