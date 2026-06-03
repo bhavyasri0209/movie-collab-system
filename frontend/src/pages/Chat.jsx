@@ -18,7 +18,7 @@ export default function Chat() {
 
   useEffect(() => {
     // Connect to socket
-    socket = io("http://127.0.0.1:5000", {
+    socket = io("https://movie-collab-system.onrender.com", {
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
